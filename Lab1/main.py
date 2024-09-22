@@ -1,5 +1,6 @@
 import numpy as np
 from numpy.linalg import inv
+import math
 
 
 
@@ -166,7 +167,7 @@ def generate_gom(A, x, B):
             Q = np.dot(Ab_inv, A[:, NotB])
             l = Q[k]
 
-            brace_function = lambda x: x - int(x)
+            brace_function = lambda x: x - math.floor(x)
 
             result = np.zeros(x.size + 1)
             result[NotB] = np.array([_ for _ in map(brace_function, l[0])])
