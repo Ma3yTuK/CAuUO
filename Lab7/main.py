@@ -36,15 +36,25 @@ min_weight = float('inf')
 
 
 def references(vertex):
-    for forward_vertex, edge_index in G[vertex].items():
-        if cf_1[edge_index] > 0 and path[forward_vertex] is None:
-            path[forward_vertex] = vertex
-            references(forward_vertex)
+    queue = [vertex]
 
-    for forward_vertex, edge_index in G_backward[vertex].items():
-        if cf_2[edge_index] > 0 and path[forward_vertex] is None:
-            path[forward_vertex] = vertex
-            references(forward_vertex)
+    while True:
+
+        if not queue:
+            return
+
+        vertex = queue[0]
+        queue = queue[1:]
+
+        for forward_vertex, edge_index in G[vertex].items():
+            if cf_1[edge_index] > 0 and path[forward_vertex] is None:
+                path[forward_vertex] = vertex
+                queue.append(forward_vertex)
+
+        for forward_vertex, edge_index in G_backward[vertex].items():
+            if cf_2[edge_index] > 0 and path[forward_vertex] is None:
+                path[forward_vertex] = vertex
+                queue.append(forward_vertex)
 
 
 def step1():
